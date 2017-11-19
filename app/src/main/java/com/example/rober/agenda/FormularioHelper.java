@@ -16,6 +16,8 @@ public class FormularioHelper {
     private EditText campoTelefone;
     private EditText campoApelido;
     private RatingBar campoNota;
+    private Contato contato;
+
 
     public FormularioHelper(Formulario formulario){
 
@@ -25,16 +27,25 @@ public class FormularioHelper {
      this.campoTelefone = (EditText) formulario.findViewById(R.id.formulario_telefone);
      this.campoApelido = (EditText) formulario.findViewById(R.id.formulario_apelido);
      this.campoNota = (RatingBar) formulario.findViewById(R.id.formulario_nota);
-}
+     contato = new Contato();
+    }
 
 
     public Contato pegaContato() {
-        Contato contato = new Contato();
         contato.setNome(campoNome.getText().toString());
-       /* contato.setApelido(campoApelido.getText().toString());
+        contato.setApelido(campoApelido.getText().toString());
         contato.setEndereco(campoEndereco.getText().toString());
         contato.setTelefone(campoTelefone.getText().toString());
-        contato.setNota(Double.valueOf(campoNota.getProgress()));*/
+        contato.setNota(Double.valueOf(campoNota.getProgress()));
     return contato;
+    }
+
+    public void preencheForm(Contato contato) {
+        campoNome.setText(contato.getNome());
+        campoApelido.setText(contato.getApelido());
+        campoTelefone.setText(contato.getTelefone());
+        campoEndereco.setText(contato.getEndereco());
+        campoNota.setProgress(contato.getNota().intValue());
+        this.contato = contato;
     }
 }

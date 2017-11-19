@@ -1,5 +1,6 @@
 package com.example.rober.agenda;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -18,7 +19,15 @@ public class Formulario extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_formulario);
+        Intent intent = getIntent();
+        Contato contato = (Contato) intent.getSerializableExtra("contato");
         this.helper = new FormularioHelper(this);
+        if (contato != null){
+        helper.preencheForm(contato);
+
+        }
+
+
 
 
     }
@@ -31,7 +40,16 @@ public class Formulario extends AppCompatActivity {
 
                 Contato contato = helper.pegaContato();
                 ContatoDAO contatoDAO = new ContatoDAO(this);
+
+                if (contato.getId() != null){
+                    contatoDAO.altera(contato);
+                }
+                else{
                 contatoDAO.insereContato(contato);
+                }
+
+
+
                 contatoDAO.close();
 
                 Toast.makeText(Formulario.this,contato.getNome() +" foi adicionado!", Toast.LENGTH_SHORT).show();

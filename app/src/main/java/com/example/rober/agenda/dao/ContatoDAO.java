@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.support.annotation.NonNull;
 
 import com.example.rober.agenda.modelo.Contato;
 
@@ -39,6 +40,15 @@ public class ContatoDAO extends SQLiteOpenHelper{
 
     public void insereContato(Contato contato){
         SQLiteDatabase db = getWritableDatabase();
+        ContentValues dados = pegaDadosContato(contato);
+
+        db.insert("Contatos", null, dados);
+
+
+    }
+
+    @NonNull
+    private ContentValues pegaDadosContato(Contato contato) {
         ContentValues dados = new ContentValues();
 
         dados.put("nome", contato.getNome());
@@ -46,11 +56,9 @@ public class ContatoDAO extends SQLiteOpenHelper{
         dados.put("telefone", contato.getTelefone());
         dados.put("apelido", contato.getApelido());
         dados.put("nota", contato.getNota());
-
-        db.insert("Contatos", null, dados);
-
-
+        return dados;
     }
+
     public List<Contato> buscaContatos(){
             String sql = "SELECT * FROM Contatos";
             SQLiteDatabase db = getReadableDatabase();
@@ -75,6 +83,15 @@ public class ContatoDAO extends SQLiteOpenHelper{
         SQLiteDatabase db = getWritableDatabase();
         String[] params = {String.valueOf(contato.getId())};
         db.delete("Contatos","id = ?", params );
+
+    }
+
+    public void altera(Contato contato) {
+    SQLiteDatabase db = getWritableDatabase();
+    ContentValues dados = pegaDadosContato(contato);
+        String[] params = {contato.getId().toString()};
+        db.update("Contatos", dados, "id=?", params);
+
 
     }
 }

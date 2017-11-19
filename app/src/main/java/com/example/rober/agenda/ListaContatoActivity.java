@@ -17,7 +17,7 @@ import com.example.rober.agenda.modelo.Contato;
 
 import java.util.List;
 
-public class ListaContatoActivity extends AppCompatActivity {
+public class ListaContatoActivity extends AppCompatActivity  {
 
     private ListView  listaAgenda;
 
@@ -27,7 +27,15 @@ public class ListaContatoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_lista_aluno);
 
          listaAgenda = (ListView) findViewById(R.id.lista_alunos);
-
+            listaAgenda.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> lista, View item, int position, long id) {
+                    Contato contato = (Contato) listaAgenda.getItemAtPosition(position);
+                    Intent intentForm = new Intent(ListaContatoActivity.this, Formulario.class);
+                    intentForm.putExtra("contato",contato);
+                    startActivity(intentForm);
+                }
+            });
         Button btnNovo =  (Button) findViewById(R.id.lista_adicionar);
         btnNovo.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,22 +1,26 @@
 package com.example.rober.agenda.modelo;
 
+import android.app.Service;
+
+import java.io.Serializable;
+
 /**
  * Created by rober on 19/11/2017.
  */
 
-public class Contato {
-    private long id;
+public class Contato implements Serializable{
+    private Long id;
     private String nome;
     private String endereco;
     private String telefone;
     private String apelido;
     private Double nota;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
